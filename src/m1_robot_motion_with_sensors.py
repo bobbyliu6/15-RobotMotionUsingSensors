@@ -15,10 +15,10 @@ import math
 def main():
     """ Calls the other functions to test/demo them. """
     #run_test_wait_for_seconds()
-    run_test_init()
-    run_test_go_and_stop()
-    run_test_go_straight_for_seconds()
-    run_test_go_straight_for_inches()
+    #run_test_init()
+    #run_test_go_and_stop()
+    #run_test_go_straight_for_seconds()
+    #run_test_go_straight_for_inches()
     run_test_go_straight_until_black()
 
 
@@ -35,17 +35,17 @@ def run_test_wait_for_seconds():
     wait_for_seconds()
 
 
-def wait_for_seconds():
+def wait_for_seconds(a):
     print("Hello")
     start=time.time()
     while True:
         current=time.time()
-        if current-start>=3:
+        if current-start>=a:
             break
     print("Good Bye")
     """ Prints Hello, waits for 3 seconds, then prints Goodbye. """
     # -------------------------------------------------------------------------
-    # TODO: 2. With your instructor, implement and test this function.
+    # DONE: 2. With your instructor, implement and test this function.
     #   IMPORTANT:  Do NOT use the    time.sleep   function
     #               anywhere in this project.
     #               (Exception: Use it in test-functions to separate tests.)
@@ -67,7 +67,7 @@ def run_test_init():
     print('Testing the   __init__   method of the SimpleRoseBot class:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 3. Implement this function, then implement the   __init__   method
+    # DONE: 3. Implement this function, then implement the   __init__   method
     #   of the SimpleRoseBot class, then use this function to test __init__.
     # -------------------------------------------------------------------------
     SimpleRoseBot()
@@ -80,10 +80,14 @@ def run_test_go_and_stop():
     print('Testing the  go  and  stop  methods of the SimpleRoseBot class:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 4. Implement this function, then implement the   go  and   stop
+    # DONE: 4. Implement this function, then implement the   go  and   stop
     #   methods of the SimpleRoseBot class, then use this function
     #   to test both   go   and   stop   at the same time.
     # -------------------------------------------------------------------------
+    robot=SimpleRoseBot()
+    robot.go(100,50)
+    wait_for_seconds(3)
+    robot.stop()
 
 
 def run_test_go_straight_for_seconds():
@@ -93,10 +97,13 @@ def run_test_go_straight_for_seconds():
     print('Testing the   go_straight_for_seconds   method of SimpleRoseBot:')
     print('--------------------------------------------------')
     # -------------------------------------------------------------------------
-    # TODO: 5. Implement this function, then implement the
+    # DONE: 5. Implement this function, then implement the
     #   go_straight_for_seconds   method of the SimpleRoseBot class,
     #   then use this function to test that method.
     # -------------------------------------------------------------------------
+    robot=SimpleRoseBot()
+    robot.go_for_seconds(5,100)
+
 
 
 def run_test_go_straight_for_inches():
@@ -110,6 +117,8 @@ def run_test_go_straight_for_inches():
     #   go_straight_for_inches   method of the SimpleRoseBot class,
     #   then use this function to test that method.
     # -------------------------------------------------------------------------
+    robot=SimpleRoseBot()
+    robot.go_for_inches()
 
 
 def run_test_go_straight_until_black():
@@ -134,6 +143,23 @@ class SimpleRoseBot(object):
         self.left_wheel_motor=Motor('B')
         self.right_wheel_motor=Motor('C')
         self.color_sensor=ColorSensor(3)
+    def go(self,lws,rws):
+        self.left_wheel_motor.turn_on(lws)
+        self.right_wheel_motor.turn_on(rws)
+    def stop(self):
+        self.left_wheel_motor.turn_off()
+        self.right_wheel_motor.turn_off()
+    def go_for_seconds(self,time,speed):
+        self.left_wheel_motor.turn_on(speed)
+        self.right_wheel_motor.turn_on(speed)
+        wait_for_seconds(time)
+        self.left_wheel_motor.turn_off()
+        self.right_wheel_motor.turn_off()
+    def go_for_inches(self):
+        self.left_wheel_motor.turn_on(50)
+        self.right_wheel_motor.turn_on(50)
+
+
 
 ###############################################################################
 # The  Motor   and   ColorSensor classes.  USE them, but do NOT modify them.
